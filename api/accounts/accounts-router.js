@@ -20,7 +20,10 @@ router.get('/:id', checkAccountId, (req, res, next) => {
 })
 
 router.post('/', checkAccountPayload, checkAccountNameUnique, (req, res, next) => {
-  Account.create(req.body)
+  Account.create({ 
+    name: req.body.name.trim(),
+    budget: req.body.budget
+  })
     .then(data => {
       res.status(201).json(data)
     })
@@ -34,7 +37,7 @@ router.put('/:id',
   (req, res, next) => {
   Account.updateById(req.params.id, req.body)
     .then(data => {
-      res.status.json(data)
+      res.json(data)
     })
     .catch(next)
 });
